@@ -75,7 +75,7 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
 }
 
 - (void)_commonInit {
-    
+
     self.firstLineLetters = @[@"Q", @"W", @"E", @"R", @"T", @"Y", @"U", @"I", @"O", @"P"];
     self.secondLineLetters = @[@"A", @"S", @"D", @"F", @"G", @"H", @"J", @"K", @"L"];
     self.thirdLineLetters = @[@"Z", @"X", @"C", @"V", @"B", @"N", @"M"];
@@ -171,7 +171,6 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
 - (void)_configureButtonsForKeyInputState {
     const BOOL hasText = self.keyInput.hasText;
     const BOOL enablesReturnKeyAutomatically = self.enablesReturnKeyAutomatically;
-    
     SWKeyboardButton *button = self.buttonDictionary[@(SWKeyboardButtonDone)];
     if (button) {
         button.enabled = (!enablesReturnKeyAutomatically) || (enablesReturnKeyAutomatically && hasText);
@@ -182,7 +181,6 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
 
 - (void)_handleHighlightGestureRecognizer:(UIPanGestureRecognizer *)gestureRecognizer {
     CGPoint point = [gestureRecognizer locationInView:self];
-    
     if (gestureRecognizer.state == UIGestureRecognizerStateChanged || gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         for (UIButton *button in self.buttonDictionary.objectEnumerator) {
             BOOL points = CGRectContainsPoint(button.frame, point) && !button.isHidden;
@@ -670,7 +668,7 @@ NS_INLINE CGRect MMButtonRectMake(CGRect rect, CGRect contentRect) {
 
 #pragma mark - Matching the system's appearance.
 
-- (BOOL)_systemUsesRoundedRectButtonsOnAllInterfaceIdioms{
+- (BOOL)_systemUsesRoundedRectButtonsOnAllInterfaceIdioms {
     static BOOL usesRoundedRectButtons;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
