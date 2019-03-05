@@ -13,6 +13,9 @@
 		03D5B5E6222E0C5B00ED81D9 /* SWKeyboardDeleteKey@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03D5B5E0222E0C5A00ED81D9 /* SWKeyboardDeleteKey@3x.png */; };
 		03D5B5E7222E0C5B00ED81D9 /* SWKeyboardDeleteKey.png in Resources */ = {isa = PBXBuildFile; fileRef = 03D5B5E1222E0C5A00ED81D9 /* SWKeyboardDeleteKey.png */; };
 		03D5B5E8222E0C5B00ED81D9 /* SWKeyboardDismissKey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03D5B5E2222E0C5A00ED81D9 /* SWKeyboardDismissKey@2x.png */; };
+		03D5B5EC222E0D0000ED81D9 /* SWKeyboardButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D5B5EB222E0D0000ED81D9 /* SWKeyboardButton.m */; };
+		03D5B5F2222E0DA200ED81D9 /* SWTextInputDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D5B5F1222E0DA200ED81D9 /* SWTextInputDelegateProxy.m */; };
+		03D5B5F5222E0E3600ED81D9 /* SWKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D5B5F4222E0E3600ED81D9 /* SWKeyboard.m */; };
 		03E837F3222E0B1F008AD055 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E837F2222E0B1F008AD055 /* AppDelegate.m */; };
 		03E837F6222E0B1F008AD055 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E837F5222E0B1F008AD055 /* ViewController.m */; };
 		03E837F9222E0B1F008AD055 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03E837F7222E0B1F008AD055 /* Main.storyboard */; };
@@ -28,6 +31,12 @@
 		03D5B5E0222E0C5A00ED81D9 /* SWKeyboardDeleteKey@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SWKeyboardDeleteKey@3x.png"; sourceTree = "<group>"; };
 		03D5B5E1222E0C5A00ED81D9 /* SWKeyboardDeleteKey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SWKeyboardDeleteKey.png; sourceTree = "<group>"; };
 		03D5B5E2222E0C5A00ED81D9 /* SWKeyboardDismissKey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SWKeyboardDismissKey@2x.png"; sourceTree = "<group>"; };
+		03D5B5EA222E0D0000ED81D9 /* SWKeyboardButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWKeyboardButton.h; sourceTree = "<group>"; };
+		03D5B5EB222E0D0000ED81D9 /* SWKeyboardButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWKeyboardButton.m; sourceTree = "<group>"; };
+		03D5B5F0222E0DA200ED81D9 /* SWTextInputDelegateProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTextInputDelegateProxy.h; sourceTree = "<group>"; };
+		03D5B5F1222E0DA200ED81D9 /* SWTextInputDelegateProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTextInputDelegateProxy.m; sourceTree = "<group>"; };
+		03D5B5F3222E0E3600ED81D9 /* SWKeyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWKeyboard.h; sourceTree = "<group>"; };
+		03D5B5F4222E0E3600ED81D9 /* SWKeyboard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWKeyboard.m; sourceTree = "<group>"; };
 		03E837EE222E0B1F008AD055 /* SWKeyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SWKeyboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03E837F1222E0B1F008AD055 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		03E837F2222E0B1F008AD055 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -51,6 +60,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03D5B5E9222E0CBF00ED81D9 /* Keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				03D5B5F3222E0E3600ED81D9 /* SWKeyboard.h */,
+				03D5B5F4222E0E3600ED81D9 /* SWKeyboard.m */,
+				03D5B5EA222E0D0000ED81D9 /* SWKeyboardButton.h */,
+				03D5B5EB222E0D0000ED81D9 /* SWKeyboardButton.m */,
+				03D5B5F0222E0DA200ED81D9 /* SWTextInputDelegateProxy.h */,
+				03D5B5F1222E0DA200ED81D9 /* SWTextInputDelegateProxy.m */,
+			);
+			path = Keyboard;
+			sourceTree = "<group>";
+		};
 		03E837E5222E0B1F008AD055 = {
 			isa = PBXGroup;
 			children = (
@@ -70,6 +92,7 @@
 		03E837F0222E0B1F008AD055 /* SWKeyboard */ = {
 			isa = PBXGroup;
 			children = (
+				03D5B5E9222E0CBF00ED81D9 /* Keyboard */,
 				03E83807222E0C17008AD055 /* Images */,
 				03E837F1222E0B1F008AD055 /* AppDelegate.h */,
 				03E837F2222E0B1F008AD055 /* AppDelegate.m */,
@@ -173,9 +196,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03D5B5EC222E0D0000ED81D9 /* SWKeyboardButton.m in Sources */,
 				03E837F6222E0B1F008AD055 /* ViewController.m in Sources */,
 				03E83801222E0B21008AD055 /* main.m in Sources */,
 				03E837F3222E0B1F008AD055 /* AppDelegate.m in Sources */,
+				03D5B5F5222E0E3600ED81D9 /* SWKeyboard.m in Sources */,
+				03D5B5F2222E0DA200ED81D9 /* SWTextInputDelegateProxy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
