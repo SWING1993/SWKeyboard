@@ -438,13 +438,6 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
     }];
 }
 
-- (void)setAllowsDecimalPoint:(BOOL)allowsDecimalPoint {
-    if (allowsDecimalPoint != _allowsDecimalPoint) {
-        _allowsDecimalPoint = allowsDecimalPoint;
-        [self setNeedsLayout];
-    }
-}
-
 - (void)setReturnKeyTitle:(NSString *)title {
     if (!title) {
         title = [self defaultReturnKeyTitle];
@@ -516,7 +509,6 @@ NS_INLINE CGRect MMButtonRectMake(CGRect rect, CGRect contentRect) {
     
     NSDictionary *buttonDictionary = self.buttonDictionary;
     const CGFloat spacing = SWKeyboardPadBorder;
-    const BOOL allowsDecimalPoint = self.allowsDecimalPoint;
     const CGFloat rightWidth = bounds.size.width * 2/7;
     
     CGRect rightContentRect = (CGRect){
@@ -544,10 +536,6 @@ NS_INLINE CGRect MMButtonRectMake(CGRect rect, CGRect contentRect) {
         if (digit == 0) {
             rect.origin.y = numberSize.height * 3;
             rect.origin.x = numberSize.width;
-            if (!allowsDecimalPoint) {
-                rect.size.width = numberSize.width * 2.0f;
-                [button setContentEdgeInsets:UIEdgeInsetsMake(0, 0, 0, numberSize.width)];
-            }
         } else {
             NSUInteger idx = (digit - 1);
             NSInteger line = idx / numbersPerLine;
@@ -573,7 +561,6 @@ NS_INLINE CGRect MMButtonRectMake(CGRect rect, CGRect contentRect) {
         rect.origin.y = numberSize.height * 3;
         rect.origin.x = numberSize.width * 2;
         [decimalPointKey setFrame:MMButtonRectMake(rect, rightContentRect)];
-        decimalPointKey.hidden = !allowsDecimalPoint;
     }
     
     // Layout utility column.

@@ -23,13 +23,13 @@
     
     // Create and configure the keyboard.
     SWKeyboard *keyboard = [[SWKeyboard alloc] initWithFrame:CGRectZero];
-    keyboard.allowsDecimalPoint = YES;
     keyboard.delegate = self;
     
     // Configure an example UITextField.
     UITextField *textField = [[UITextField alloc] initWithFrame:CGRectZero];
+    textField.inputAccessoryView = [[UIView alloc] init];
     textField.inputView = keyboard;
-    textField.text = @(123456789).stringValue;
+    textField.text = @"123456789ABCDEFG";
     textField.placeholder = @"Type something…";
     textField.font = [UIFont systemFontOfSize:24.0f];
     textField.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;

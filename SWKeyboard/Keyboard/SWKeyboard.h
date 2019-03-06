@@ -33,14 +33,11 @@ typedef NS_ENUM(NSUInteger, SWKeyboardButtonStyle) {
 
 @end
 
-
 @interface SWKeyboard : UIInputView
 
 @property (weak, nonatomic, nullable) id <UIKeyInput> keyInput;
 
 @property (weak, nonatomic, nullable) id <SWKeyboardDelegate> delegate;
-
-@property (assign, nonatomic) BOOL allowsDecimalPoint;
 
 @property (copy, nonatomic, null_resettable) NSString *returnKeyTitle;
 
