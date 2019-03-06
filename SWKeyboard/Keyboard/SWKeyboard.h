@@ -25,11 +25,11 @@ typedef NS_ENUM(NSUInteger, SWKeyboardButtonStyle) {
 
 @optional
 
-- (BOOL)numberKeyboard:(SWKeyboard *)keyboard shouldInsertText:(NSString *)text;
+- (BOOL)keyboard:(SWKeyboard *)keyboard shouldInsertText:(NSString *)text;
 
-- (BOOL)numberKeyboardShouldReturn:(SWKeyboard *)keyboard;
+- (BOOL)keyboardShouldReturn:(SWKeyboard *)keyboard;
 
-- (BOOL)numberKeyboardShouldDeleteBackward:(SWKeyboard *)keyboard;
+- (BOOL)keyboardShouldDeleteBackward:(SWKeyboard *)keyboard;
 
 @end
 

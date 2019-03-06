@@ -40,7 +40,7 @@
 
 #pragma mark - SWKeyboardDelegate.
 
-- (BOOL)numberKeyboardShouldReturn:(SWKeyboard *)Keyboard {
+- (BOOL)keyboardShouldReturn:(SWKeyboard *)Keyboard {
     // Do something with the done key if neeed. Return YES to dismiss the keyboard.
     return YES;
 }

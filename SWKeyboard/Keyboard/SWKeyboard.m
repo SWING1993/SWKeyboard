@@ -220,8 +220,8 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
     if (button.titleLabel.text.length > 0) {
         NSString *buttonTitleText = [button titleForState:UIControlStateNormal];
         if (button == self.buttonDictionary[[buttonTitleText uppercaseString]] || button == self.buttonDictionary[[buttonTitleText lowercaseString]]) {
-            if ([delegate respondsToSelector:@selector(numberKeyboard:shouldInsertText:)]) {
-                BOOL shouldInsert = [delegate numberKeyboard:self shouldInsertText:buttonTitleText];
+            if ([delegate respondsToSelector:@selector(keyboard:shouldInsertText:)]) {
+                BOOL shouldInsert = [delegate keyboard:self shouldInsertText:buttonTitleText];
                 if (!shouldInsert) {
                     return;
                 }
@@ -248,8 +248,8 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
         NSNumber *number = @(keyboardButtonKey - numberMin);
         NSString *string = number.stringValue;
         
-        if ([delegate respondsToSelector:@selector(numberKeyboard:shouldInsertText:)]) {
-            BOOL shouldInsert = [delegate numberKeyboard:self shouldInsertText:string];
+        if ([delegate respondsToSelector:@selector(keyboard:shouldInsertText:)]) {
+            BOOL shouldInsert = [delegate keyboard:self shouldInsertText:string];
             if (!shouldInsert) {
                 return;
             }
@@ -262,8 +262,8 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
     else if (keyboardButtonKey == SWKeyboardButtonBackspace) {
         BOOL shouldDeleteBackward = YES;
         
-        if ([delegate respondsToSelector:@selector(numberKeyboardShouldDeleteBackward:)]) {
-            shouldDeleteBackward = [delegate numberKeyboardShouldDeleteBackward:self];
+        if ([delegate respondsToSelector:@selector(keyboardShouldDeleteBackward:)]) {
+            shouldDeleteBackward = [delegate keyboardShouldDeleteBackward:self];
         }
         
         if (shouldDeleteBackward) {
@@ -275,8 +275,8 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
     else if (keyboardButtonKey == SWKeyboardButtonDone) {
         BOOL shouldReturn = YES;
         
-        if ([delegate respondsToSelector:@selector(numberKeyboardShouldReturn:)]) {
-            shouldReturn = [delegate numberKeyboardShouldReturn:self];
+        if ([delegate respondsToSelector:@selector(keyboardShouldReturn:)]) {
+            shouldReturn = [delegate keyboardShouldReturn:self];
         }
         
         if (shouldReturn) {
@@ -295,8 +295,8 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
     // Handle .
     else if (keyboardButtonKey == SWKeyboardButtonDecimalPoint) {
         NSString *decimalText = [button titleForState:UIControlStateNormal];
-        if ([delegate respondsToSelector:@selector(numberKeyboard:shouldInsertText:)]) {
-            BOOL shouldInsert = [delegate numberKeyboard:self shouldInsertText:decimalText];
+        if ([delegate respondsToSelector:@selector(keyboard:shouldInsertText:)]) {
+            BOOL shouldInsert = [delegate keyboard:self shouldInsertText:decimalText];
             if (!shouldInsert) {
                 return;
             }
@@ -308,8 +308,8 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
     // Handle Underline
     else if (keyboardButtonKey == SWKeyboardButtonUnderline) {
         NSString *underlineText = [button titleForState:UIControlStateNormal];
-        if ([delegate respondsToSelector:@selector(numberKeyboard:shouldInsertText:)]) {
-            BOOL shouldInsert = [delegate numberKeyboard:self shouldInsertText:underlineText];
+        if ([delegate respondsToSelector:@selector(keyboard:shouldInsertText:)]) {
+            BOOL shouldInsert = [delegate keyboard:self shouldInsertText:underlineText];
             if (!shouldInsert) {
                 return;
             }
