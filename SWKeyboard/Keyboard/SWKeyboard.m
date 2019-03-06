@@ -18,6 +18,7 @@ typedef NS_ENUM(NSUInteger, SWKeyboardButtonKey) {
     SWKeyboardButtonSpecial,
     SWKeyboardButtonDecimalPoint,
     SWKeyboardButtonUnderline,
+    SWKeyboardButtonCapsLock,
     SWKeyboardButtonNone = NSNotFound,
 };
 
@@ -26,6 +27,7 @@ typedef NS_ENUM(NSUInteger, SWKeyboardButtonKey) {
 @property (strong, nonatomic) NSDictionary *buttonDictionary;
 @property (strong, nonatomic) SWTextInputDelegateProxy *keyInputProxy;
 @property (copy, nonatomic) dispatch_block_t specialKeyHandler;
+@property (copy, nonatomic) NSArray *letters;
 @property (copy, nonatomic) NSArray *firstLineLetters;
 @property (copy, nonatomic) NSArray *secondLineLetters;
 @property (copy, nonatomic) NSArray *thirdLineLetters;
@@ -79,6 +81,7 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
     self.firstLineLetters = @[@"Q", @"W", @"E", @"R", @"T", @"Y", @"U", @"I", @"O", @"P"];
     self.secondLineLetters = @[@"A", @"S", @"D", @"F", @"G", @"H", @"J", @"K", @"L"];
     self.thirdLineLetters = @[@"Z", @"X", @"C", @"V", @"B", @"N", @"M"];
+    self.letters = @[@"Q", @"W", @"E", @"R", @"T", @"Y", @"U", @"I", @"O", @"P", @"A", @"S", @"D", @"F", @"G", @"H", @"J", @"K", @"L", @"Z", @"X", @"C", @"V", @"B", @"N", @"M"];
     
     [self _configureButtonsForCurrentStyle];
     UIImage *dismissImage = [self.class _keyboardImageNamed:@"SWKeyboardDismissKey.png"];
@@ -89,6 +92,7 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
 }
 
 - (void)_configureButtonsForCurrentStyle {
+    
     NSMutableDictionary *buttonDictionary = [NSMutableDictionary dictionary];
     
     const NSInteger numberMin = SWKeyboardButtonNumberMin;
@@ -141,17 +145,19 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
     [underlineButton setTitle:@"-" forState:UIControlStateNormal];
     [buttonDictionary setObject:underlineButton forKey:@(SWKeyboardButtonUnderline)];
     
-    NSMutableArray *letters = [NSMutableArray arrayWithArray:self.firstLineLetters];
-    [letters addObjectsFromArray:self.secondLineLetters];
-    [letters addObjectsFromArray:self.thirdLineLetters];
-
-    for (NSString *key in letters) {
+    for (NSString *key in self.letters) {
         UIButton *button = [SWKeyboardButton keyboardButtonWithStyle:SWKeyboardButtonStyleWhite];
         NSString *title = key;
         [button setTitle:title forState:UIControlStateNormal];
         [button.titleLabel setFont:buttonFont];
         [buttonDictionary setObject:button forKey:key];
     }
+    
+    UIButton *capsLockButton = [SWKeyboardButton keyboardButtonWithStyle:SWKeyboardButtonStyleWhite];
+    capsLockButton.selected = YES;
+    [capsLockButton setTitle:@"小写" forState:UIControlStateNormal];
+    [capsLockButton setTitle:@"大写" forState:UIControlStateSelected];
+    [buttonDictionary setObject:capsLockButton forKey:@(SWKeyboardButtonCapsLock)];
     
     for (UIButton *button in buttonDictionary.objectEnumerator) {
         [button setExclusiveTouch:YES];
@@ -213,7 +219,7 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
     
     if (button.titleLabel.text.length > 0) {
         NSString *buttonTitleText = [button titleForState:UIControlStateNormal];
-        if (button == self.buttonDictionary[buttonTitleText]) {
+        if (button == self.buttonDictionary[[buttonTitleText uppercaseString]] || button == self.buttonDictionary[[buttonTitleText lowercaseString]]) {
             if ([delegate respondsToSelector:@selector(numberKeyboard:shouldInsertText:)]) {
                 BOOL shouldInsert = [delegate numberKeyboard:self shouldInsertText:buttonTitleText];
                 if (!shouldInsert) {
@@ -225,11 +231,11 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
         }
     }
     
-    __block SWKeyboardButtonKey keyboardButton = SWKeyboardButtonNone;
+    __block SWKeyboardButtonKey keyboardButtonKey = SWKeyboardButtonNone;
     
     [self.buttonDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (button == obj) {
-            keyboardButton = [key unsignedIntegerValue];
+            keyboardButtonKey = [key unsignedIntegerValue];
             *stop = YES;
         }
     }];
@@ -238,8 +244,8 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
     const NSInteger numberMin = SWKeyboardButtonNumberMin;
     const NSInteger numberMax = SWKeyboardButtonNumberMax;
     
-    if (keyboardButton >= numberMin && keyboardButton < numberMax) {
-        NSNumber *number = @(keyboardButton - numberMin);
+    if (keyboardButtonKey >= numberMin && keyboardButtonKey < numberMax) {
+        NSNumber *number = @(keyboardButtonKey - numberMin);
         NSString *string = number.stringValue;
         
         if ([delegate respondsToSelector:@selector(numberKeyboard:shouldInsertText:)]) {
@@ -253,7 +259,7 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
     }
     
     // Handle backspace.
-    else if (keyboardButton == SWKeyboardButtonBackspace) {
+    else if (keyboardButtonKey == SWKeyboardButtonBackspace) {
         BOOL shouldDeleteBackward = YES;
         
         if ([delegate respondsToSelector:@selector(numberKeyboardShouldDeleteBackward:)]) {
@@ -266,7 +272,7 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
     }
     
     // Handle done.
-    else if (keyboardButton == SWKeyboardButtonDone) {
+    else if (keyboardButtonKey == SWKeyboardButtonDone) {
         BOOL shouldReturn = YES;
         
         if ([delegate respondsToSelector:@selector(numberKeyboardShouldReturn:)]) {
@@ -279,7 +285,7 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
     }
     
     // Handle special key.
-    else if (keyboardButton == SWKeyboardButtonSpecial) {
+    else if (keyboardButtonKey == SWKeyboardButtonSpecial) {
         dispatch_block_t handler = self.specialKeyHandler;
         if (handler) {
             handler();
@@ -287,7 +293,7 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
     }
     
     // Handle .
-    else if (keyboardButton == SWKeyboardButtonDecimalPoint) {
+    else if (keyboardButtonKey == SWKeyboardButtonDecimalPoint) {
         NSString *decimalText = [button titleForState:UIControlStateNormal];
         if ([delegate respondsToSelector:@selector(numberKeyboard:shouldInsertText:)]) {
             BOOL shouldInsert = [delegate numberKeyboard:self shouldInsertText:decimalText];
@@ -299,7 +305,8 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
         [keyInput insertText:decimalText];
     }
     
-    else if (keyboardButton == SWKeyboardButtonUnderline) {
+    // Handle Underline
+    else if (keyboardButtonKey == SWKeyboardButtonUnderline) {
         NSString *underlineText = [button titleForState:UIControlStateNormal];
         if ([delegate respondsToSelector:@selector(numberKeyboard:shouldInsertText:)]) {
             BOOL shouldInsert = [delegate numberKeyboard:self shouldInsertText:underlineText];
@@ -308,6 +315,16 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
             }
         }
         [keyInput insertText:underlineText];
+    }
+    
+    // Handle CapsLock
+    else if (keyboardButtonKey == SWKeyboardButtonCapsLock) {
+        button.selected = !button.selected;
+        for (NSString *key in self.letters) {
+            UIButton *letterButton = self.buttonDictionary[key];
+            NSString *letterTitle = button.selected ? [letterButton.titleLabel.text uppercaseString] : [letterButton.titleLabel.text lowercaseString];
+            [letterButton setTitle:letterTitle forState:UIControlStateNormal];
+        }
     }
     
     [self _configureButtonsForKeyInputState];
@@ -336,7 +353,6 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
     }
     
     SWTextInputDelegateProxy *keyInputProxy = _keyInputProxy;
-    
     if (keyInput != _keyInput) {
         if ([_keyInput conformsToProtocol:@protocol(UITextInput)]) {
             [(id <UITextInput>)_keyInput setInputDelegate:keyInputProxy.previousTextInputDelegate];
@@ -600,8 +616,6 @@ NS_INLINE CGRect MMButtonRectMake(CGRect rect, CGRect contentRect) {
     }
     
     CGRect leftContentRect = (CGRect){
-        .origin.x = 0,
-        .origin.y = 0,
         .size.width = rightContentRect.origin.x,
         .size.height = rightContentRect.size.height
     };
@@ -628,6 +642,17 @@ NS_INLINE CGRect MMButtonRectMake(CGRect rect, CGRect contentRect) {
             }
             [button setFrame:MMButtonRectMake(rect, leftContentRect)];
         }
+    }
+    
+    // Layout decimal point.
+    UIButton *capsLockButton = buttonDictionary[@(SWKeyboardButtonCapsLock)];
+    if (capsLockButton) {
+        CGRect rect = (CGRect){
+            .origin.y = letterSize.height * 2,
+            .size.width = letterSize.width * 1.5f,
+            .size.height = letterSize.height
+        };
+        [capsLockButton setFrame:MMButtonRectMake(rect, leftContentRect)];
     }
     
     for (SWKeyboardButton *button in buttonDictionary.allValues) {

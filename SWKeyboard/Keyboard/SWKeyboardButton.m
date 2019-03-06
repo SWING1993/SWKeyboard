@@ -103,7 +103,7 @@
         self.backgroundColor = self.disabledFillColor;
         self.imageView.tintColor = self.disabledControlColor;
     } else {
-        if (self.isHighlighted || self.isSelected) {
+        if (self.isHighlighted) {
             self.backgroundColor = self.highlightedFillColor;
             self.imageView.tintColor = self.controlColor;
         } else {
