@@ -410,12 +410,11 @@ static const CGFloat SWKeyboardPadSpacing = 8.0f;
 #pragma mark - Public.
 
 - (void)configureSpecialKeyWithImage:(UIImage *)image actionHandler:(dispatch_block_t)handler {
-    if (image) {
+    if (handler) {
         self.specialKeyHandler = handler;
     } else {
         self.specialKeyHandler = NULL;
     }
-    
     UIButton *button = self.buttonDictionary[@(SWKeyboardButtonSpecial)];
     [button setImage:image forState:UIControlStateNormal];
 }
