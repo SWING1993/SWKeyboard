@@ -18,3 +18,7 @@ textField.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
 self.textField = textField;
 [self.view addSubview:textField];
 ```
+
+![avatar](https://github.com/SWING1993/SWKeyboard/blob/master/Screenshots/1.png)
+
+![avatar](https://github.com/SWING1993/SWKeyboard/blob/master/Screenshots/2.png)
